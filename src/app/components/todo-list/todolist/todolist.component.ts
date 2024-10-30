@@ -1,21 +1,16 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ProductService } from '../../../services/product.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-product-form',
-  templateUrl: './product-form.component.html',
-  styleUrls: ['./product-form.component.scss']
+  selector: 'app-todolist',
+  // standalone: true,
+  // imports: [],
+  templateUrl: './todolist.component.html',
+  styleUrl: './todolist.component.scss'
 })
-export class ProductFormComponent {
+export class TodolistComponent {
   
-  constructor(
-    private fb: FormBuilder,
-    private productService: ProductService
-  ) 
-  {}
-
-  productForm: FormGroup<any> = this.fb.group({
+  productForm: FormGroup<any> = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(3)]),
     category: new FormControl('', [Validators.required, Validators.minLength(3)]),
     quantity: new FormControl('', [Validators.required, Validators.min(1)]),
@@ -29,13 +24,14 @@ export class ProductFormComponent {
         ...this.productForm.value,
         status: this.productForm.value.quantity > 0 ? true : false
       }
-
-      this.productService.addProduct(requestBody);
-      this.productForm.reset();
+       this.productForm.reset()
+      // this.productService.addProduct(requestBody);
+      // this.productForm.reset();
     }
 
     else {
       alert('Please fill all the fields correctly!');
     }
   }
+
 }
